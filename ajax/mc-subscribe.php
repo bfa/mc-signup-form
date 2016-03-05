@@ -6,8 +6,6 @@ Package URI:   https://github.com/bfa/mc-signup-form
 Author:        Brent Alexander
 Author URI:    http://www.bfa.me
 Author Email:  brent@bfa.me
-Last Updated:  3/5/2016
-Version:       1.0
 */
 
 // PHP Console
