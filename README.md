@@ -10,7 +10,7 @@ Shows MailChimp Signup Form for non-members. Uses cookies to store data. If cook
 ### The PHP script itself:
 - The file <code>mc-signup-form.php</code> is where the main source code of the script lives.
 - This file begins with inline CSS (kept this inline to keep requests as few as possible)
-- Next, we have the markup: <pre><code><div id="mc_embed_signup">...</div></code></pre>
+- Next, we have the markup: <code><pre><div id="mc_embed_signup">...</div></pre></code>
 - Lastly, the javascript.
 
 ### The JavaScript:
