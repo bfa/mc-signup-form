@@ -11,13 +11,25 @@ Author:        Brent Alexander
 Author URI:    http://www.bfa.me
 Author Email:  brent@bfa.me
 Last Updated:  3/5/2016
-Version:       1.0
+Version:       1.1
+
+@ChangeLog:
+1.1:
+- Fixed overflow scroll bug
+- Added cancelSignUpForm function that checks for referring URL
+- Added close button for easier UX
+1.0:
+- Initial Release
+
+@ToDo:
+- All done. :)
+
 */
 ?>
 <!-- Begin MailChimp Signup Form -->
 <style type="text/css">
    .blur {
-      filter: blur(10px);/
+      filter: blur(10px);
       -webkit-filter: blur(10px);
       -moz-filter: blur(10px);
       -o-filter: blur(10px);
@@ -28,7 +40,23 @@ Version:       1.0
       -o-transition: all 100ms ease;
       transition: all 100ms ease;
    }
-   #mc_embed_signup{
+   #mc_embed_signup a,
+   #mc_embed_signup input {
+      -webkit-transition: all 200ms ease;
+      -moz-transition: all 200ms ease;
+      -o-transition: all 200ms ease;
+      transition: all 200ms ease;
+   }
+   #mc_embed_signup .left {
+      float: left;
+   }
+   #mc_embed_signup .right {
+      float: right;
+   }
+   #mc_embed_signup .clear {
+      clear: both !important;
+   }
+   #mc_embed_signup {
       display: none;
       position: fixed;
       top: 0;
@@ -57,16 +85,43 @@ Version:       1.0
       background: rgb(248, 248, 248);
       width: 320px;
       max-height: 80%;
-      overflow: scroll;
+      overflow: auto;
    }
-   .mc-modal h1 {
+   #mc_embed_signup #mc-close-modal {
+      position: absolute;
+      top: 0.325em;
+      right: 0.5em;
+      overflow: hidden;
+   }
+   #mc_embed_signup #mc-close-modal:hover {
+      color: #dbe11f;
+   }
+   #mc_embed_signup #mc-close-modal span {
+      display: block;
+      position: absolute;
+   }
+   #mc_embed_signup h1 {
       margin: 0;
       font-family: "minion-pro",serif;
       text-transform: none;
       font-size: 34px;
       font-weight: 400;
+      line-height: 1.2;
       letter-spacing: 0px;
       font-style: italic;
+   }
+   #mc_embed_signup p {
+      margin-bottom: 0;
+   }
+   #mc_embed_signup #mc-subscribe-form,
+   #mc_embed_signup #mc-check-status-form {
+      margin-bottom: 1em;
+   }
+   #mc_embed_signup #mc-subscribe-form::after,
+   #mc_embed_signup #mc-check-status-form::after {
+      content: "";
+      display: table;
+      clear: both;
    }
    #mc_embed_signup label {
       display: block;
@@ -134,10 +189,6 @@ Version:       1.0
       font-weight: 700;
       font-size: 0.825rem;
       letter-spacing: 4px;
-      -webkit-transition: all 200ms ease;
-      -moz-transition: all 200ms ease;
-      -o-transition: all 200ms ease;
-      transition: all 200ms ease;
       max-width: 50%;
       box-sizing: border-box;
       font-style: normal;
@@ -170,26 +221,26 @@ Version:       1.0
       border-color: #ddd;
    }
    #mc_embed_signup #mc-check-status {
+      margin-top: 1em;
       display: none;
    }
    #mc_embed_signup #already-subscribed {
       display: block;
-      margin-top: 1em;
-      margin-bottom: 1em;
       font-size: 0.75em;
       color: #aaa;
-      -webkit-transition: all 200ms ease;
-      -moz-transition: all 200ms ease;
-      -o-transition: all 200ms ease;
-      transition: all 200ms ease;
    }
    #mc_embed_signup #already-subscribed:hover {
       color: #333;
    }
    #mc_embed_signup #mc-responses,
    #mc_embed_signup #mc-cs-responses {
+      display: none;
       margin-top: 1em;
       font-style: italic;
+   }
+   #mc_embed_signup .success {
+      color: #11CA41;
+      font-weight: bold;
    }
    #mc_embed_signup .error {
       color: #C73C3C;
@@ -206,10 +257,6 @@ Version:       1.0
    #mc_embed_signup p a {
       opacity: 0.5;
       text-decoration: underline;
-      -webkit-transition: all 200ms ease;
-      -moz-transition: all 200ms ease;
-      -o-transition: all 200ms ease;
-      transition: all 200ms ease;
    }
    #mc_embed_signup p a:hover {
       opacity: 0.75;
@@ -218,7 +265,11 @@ Version:       1.0
 <div id="mc_embed_signup">
    <div class="mc-modal-bg"></div>
    <div class="mc-modal">
-      <h1>Sign Up To Browse Our Floorplans</h1>
+      <a href="#" id="mc-close-modal">
+         <i class="fa fa-close"></i>
+         <span>Close</span>
+      </a>
+      <h1>Sign Up To View Content</h1>
       <form action="" method="post" id="mc-subscribe-form"
          name="mc-subscribe-form">
          <div id="mc_embed_signup_scroll">
@@ -272,15 +323,14 @@ Version:       1.0
                   tabindex="-1" value=""></div>
             <div>
                <input type="button" value="No Thanks"
-               name="no-thanks" id="mc-no-thanks-btn" class="button">
+               name="no-thanks" id="mc-no-thanks-btn" class="button left">
                <input type="submit" value="Subscribe" name="subscribe"
-               id="mc-subscribe-btn" class="button">
+               id="mc-subscribe-btn" class="button right">
             </div>
          </div>
-         <div id="mc-responses"></div>
+         <div class="clear" id="mc-responses"></div>
       </form>
-      <div id="mc-check-status-wrapper">
-         <a href="#" id="already-subscribed">Already subscribed?</a>
+      <div class="clear" id="mc-check-status-wrapper">
          <div id="mc-check-status">
             <form action="" method="post" id="mc-check-status-form"
                name="mc-check-status-form">
@@ -303,6 +353,7 @@ Version:       1.0
                </div>
             </form>
          </div>
+         <a href="#" id="already-subscribed">Already subscribed?</a>
       </div>
       <div id="mc-cs-responses"></div>
    </div>
@@ -316,22 +367,20 @@ jQuery(function($) {
       // declare vars
       var member = false;
       // get subscription status cookie
-      member = Cookies.get('PERIMITER_MC_SUBSCRIPTION_STATUS');
+      member = Cookies.get('CUSTOM_MC_SUBSCRIPTION_STATUS');
       // if not already a member, then show the lightbox
       if (!member) {
          // fade in signup form on 200ms delay
          setTimeout(function() { fadeInSignUpForm(); }, 200);
          // bind click events
-         $('#already-subscribed').click(function (e){
+         $('#mc-no-thanks-btn, #mc-close-modal').click(function(e){
+            e.preventDefault();
+            cancelSignUpForm(); // cancels signup form
+         });
+         $('#already-subscribed').click(function(e){
             e.preventDefault();
             alreadySubscribed(); // show check status form
          });
-         $('#mc-no-thanks-btn').click(function (e){
-            e.preventDefault();
-            parent.history.back(); // go back to whence you came
-      });
-      } else {
-         // you may pass :)
       }
    });
 
@@ -347,24 +396,32 @@ jQuery(function($) {
       $('.container').removeClass('blur');
    }
 
+   // function: cancel signup form
+   function cancelSignUpForm() { // console.log('mc modal canceled');
+      // check for referrer and go back
+      if (document.referrer != '') parent.history.back();
+      // if no referrer go home
+      window.location.href = '/';
+   }
+
    // function: if user is already subscribed
-   function alreadySubscribed() { // console.log('already subscribed');
+   function alreadySubscribed() {
       // toggle #already-subscribed link
-      if ( $('#mc_embed_signup_scroll').is(':visible') )
+      if ( $('#mc-subscribe-form').is(':visible') )
          $('#already-subscribed').text('← Back to Subscription Form');
       else
          $('#already-subscribed').text('Already subscribed?');
       // toggle the forms and response divs
-      $('#mc_embed_signup_scroll').slideToggle('fast');
-      $('#mc-check-status').slideToggle('fast');
+      $('#mc-subscribe-form').slideToggle('fast');
       $('#mc-responses').slideToggle('fast');
+      $('#mc-check-status').slideToggle('fast');
       $('#mc-cs-responses').slideToggle('fast');
    }
 
    // function: set cookie for 10 years
    function setSignUpFormCookie() { // console.log('setting cookie');
       Cookies.set(
-         'PERIMITER_MC_SUBSCRIPTION_STATUS',     // name
+         'CUSTOM_MC_SUBSCRIPTION_STATUS',     // name
          'true',                                 // value
          { expires: 3650 }                       // exp in days
       );
@@ -425,23 +482,28 @@ jQuery(function($) {
                      // success response
                      response =  '<p class="success">Almost done! We '+
                                  'just sent you an email to confirm '+
-                                 'your email address.<br><br>'+
+                                 'your email address.'+
                                  '<a style="display:block; width:100%;'+
                                  'max-width:100%;" href="#"'+
-                                 'id="close-window"'+
+                                 'id="view-content"'+
                                  'class="button reverse">'+
-                                 'Browse Floorplans</a></p>';
+                                 'View Content</a></p>';
                      // slide up forms
                      $('#mc_embed_signup_scroll').slideUp('fast');
                      $('#mc-check-status-wrapper').slideUp('fast');
                      $('#mc-cs-responses').slideUp('fast');
                      // set site-wide cookie that expires in 10 years
                      setSignUpFormCookie();
+                     // unbind close modal and bind to fade out form
+                     $('#mc-close-modal').unbind().click(function(e){
+                        e.preventDefault();
+                        fadeOutSignUpForm();
+                     });
                   }
                   // output response
                   $('#mc-responses').html(response).fadeIn(200);
-                  // bind click event to close window buttoon
-                  $('#close-window').click(function (e){
+                  // unbind bind click event to close window button
+                  $('#view-content').click(function(e){
                      e.preventDefault();
                      fadeOutSignUpForm();
                   });
@@ -491,17 +553,22 @@ jQuery(function($) {
                      // response for subscribers
                      response =  '<p class="success">'+
                                  'Looks like you are on the list! '+
-                                 'You may proceed.<br><br>'+
+                                 'You may proceed.'+
                                  '<a style="display:block;width:100%;'+
                                  'max-width:100%;" href="#"'+
-                                 'id="close-window"'+
+                                 'id="view-content"'+
                                  'class="button reverse">'+
-                                 'Browse Floorplans</a></p>';
+                                 'View Content</a></p>';
                      // slide up forms
                      $('#mc_embed_signup_scroll').slideUp('fast');
                      $('#mc-check-status-wrapper').slideUp('fast');
                      // set site-wide cookie that expires in 10 years
                      setSignUpFormCookie();
+                     // unbind bind close modal and bind to fade out form
+                     $('#mc-close-modal').unbind().click(function(e){
+                        e.preventDefault();
+                        fadeOutSignUpForm();
+                     });
                      // auto proceed in 3, 2, 1...
                      setTimeout(function() {
                         fadeOutSignUpForm();
@@ -510,7 +577,7 @@ jQuery(function($) {
                   // if member is pending
                   else if (data == 'pending') {
                      // response for pending subscribers
-                     response =  '<p class="success">'+
+                     response =  '<p>'+
                                  'Looks like you have signed up, but '+
                                  'have not confirmed your email '+
                                  'address yet. Please check your email '+
@@ -524,8 +591,8 @@ jQuery(function($) {
                      e.preventDefault();
                      alreadySubscribed();
                   });
-                  // bind click event to close window buttoon
-                  $('#close-window').click(function (e){
+                  // bind click event to close window button
+                  $('#view-content').click(function(e){
                      e.preventDefault();
                      fadeOutSignUpForm();
                   });
