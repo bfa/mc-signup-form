@@ -16,7 +16,7 @@ Shows MailChimp Signup Form for non-members. Uses cookies to store data. If cook
 ### The JavaScript:
 - I'm using [JS Cookie](https://github.com/js-cookie/js-cookie) for cookie management for easiest readability. 
 - Again all my js is inline to keep requests to a minimum. 
-- On window load, JS checks if user is a member by looking for a browser cookie: <pre>PERIMITER_MC_SUBSCRIPTION_STATUS</pre>
+- On window load, JS checks if user is a member by looking for a browser cookie: <code>PERIMITER_MC_SUBSCRIPTION_STATUS</code>
 - If cookie isn't found, then the signup form modal fades in.
 - If cookie is found, then no signup form appears. Easy enough?
 - I went ahead and added in a link for "Already subscribed?" for best UX. This allows users to enter their email to check their subscription status if they are browsing on a different device. 
@@ -27,16 +27,16 @@ Shows MailChimp Signup Form for non-members. Uses cookies to store data. If cook
 #### The AJAX requests:
 - Here's where the actual PHP comes in.
 - There are 2 ajax processing requests, which are written in PHP:
-(1) subscribe user:  <pre>/ajax/mc-subscripe.php</pre>
-(2) check subscription status:  <pre>/ajax/mc-subscripe.php</pre>
+(1) subscribe user:  <code>/ajax/mc-subscripe.php</code>
+(2) check subscription status:  <code>/ajax/mc-subscripe.php</code>
 - I've included [PHP Console](https://github.com/barbushin/php-console), used for debugging. Turned off for production.
-- All lines starting with <pre>PC::</pre> are used for debugging. Commented these out for production.
+- All lines starting with <code>PC::</code> are used for debugging. Commented these out for production.
 - MailChimp API key and List ID are located at the very top. These can be grabbed from MailChimp's account settings. These are required; the script will not work without them. 
 <pre>// MailChimp API keys and List ID
 $apiKey = '{your-mailchimp-api-key}';
 $listId = '{your-mailchimp-list-id}';</pre>
 - These scripts use the MailChimp API v3.0. [Full docs here](http://developer.mailchimp.com/documentation/mailchimp/guides/get-started-with-mailchimp-api-3/).
 - These functions simply ping MailChimp using an HTTP request via curl. They return two items: (1) a result and (2) an HTTP code, either 404 (fail) or 200 (success).
-- After returning the response from MailChimp, the ajax scripts then echos the output back to the JavaScript in <pre>mc-signup-form.php.</pre>
+- After returning the response from MailChimp, the ajax scripts then echos the output back to the JavaScript in <code>mc-signup-form.php.</code>
 
 And that's it! Enjoy!
