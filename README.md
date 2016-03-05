@@ -40,11 +40,11 @@ $listId = '{your-mailchimp-list-id}';</pre>
 - After returning the response from MailChimp, the ajax scripts then echos the output back to the JavaScript in <code>mc-signup-form.php.</code>
 
 ### Version History
-*1.1*
-- Fixed overflow scroll bug
-- Added cancelSignUpForm function that checks for referring URL
-- Added close button for easier UX
-*1.0*
-- Initial Release
+**1.1**
+* Fixed overflow scroll bug
+* Added cancelSignUpForm function that checks for referring URL
+* Added close button for easier UX
+**1.0**
+* Initial Release
 
 And that's it! Enjoy!
