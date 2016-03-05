@@ -39,4 +39,12 @@ $listId = '{your-mailchimp-list-id}';</pre>
 - These functions simply ping MailChimp using an HTTP request via curl. They return two items: (1) a result and (2) an HTTP code, either 404 (fail) or 200 (success).
 - After returning the response from MailChimp, the ajax scripts then echos the output back to the JavaScript in <code>mc-signup-form.php.</code>
 
+### Version History
+1.1:
+- Fixed overflow scroll bug
+- Added cancelSignUpForm function that checks for referring URL
+- Added close button for easier UX
+1.0:
+- Initial Release
+
 And that's it! Enjoy!
