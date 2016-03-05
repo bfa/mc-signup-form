@@ -21,7 +21,7 @@
 <script src="js/jquery-1.10.0.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 
-<?php include('parts/mc-signup-form.php'); ?>
+<?php include('mc-signup-form.php'); ?>
 
 </body>
 </html>
