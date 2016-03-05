@@ -2,13 +2,13 @@
 
 Shows MailChimp Signup Form for non-members. Uses cookies to store data. If cookie is found, no signup form appears. If no cookie is found, then signup form appears. Contains subscribe form and a form to check the user's susbcription if the user is already subscribed.
 
-### Code in the footer of the floorplans pages:
-- At the very bottom of floorplans.php and the other floorplans subpages, you will I included the signup form script:
-  <pre><?php include('parts/mc-signup-form.php'); ?></pre>
+### Index.php:
+- At the very bottom of index.php, you will I included the signup form script:
+  <pre><?php include('mc-signup-form.php'); ?></pre>
 - This is only in the floorplans pages, but can be added to any other page by putting the above code in the footer.
 
 ### The PHP script itself:
-- The file parts/mc-signup-form.php is where the main source code of the script lives.
+- The file <code>mc-signup-form.php</code> is where the main source code of the script lives.
 - This file begins with inline CSS (kept this inline to keep requests as few as possible)
 - Next, we have the markup: <pre><div id="mc_embed_signup">...</div></pre>
 - Lastly, the javascript.
